@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var tweets = require('/src/mocks/tweets.json');
 const pug = require('pug');
 
 //Set the view engine and the template lookup
