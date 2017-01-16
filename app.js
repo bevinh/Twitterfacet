@@ -8,6 +8,7 @@ app.set('views', __dirname + '/src/templates');
 //Set the places to look for the static files
 app.use('/static', express.static(__dirname + '/src/public'));
 
+//add the first page
 app.get('/', function(req, res){
     var path = req.path;
     res.locals.path = path;
