@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+    include ./partials/_head.pug
+
+    body#page-top
+        include ./partials/_nav.pug
+        block content
+            script(src='/static/js/jquery.js')
+            script(src='/static/js/bootstrap.js')
+            script(src='/static/js/jquery.easing.min.js')
+            script(src='/static/js/jquery.fittext.js')
+            script(src='/static/js/wow.min.js')
+            script(src='/static/js/creative.js')
+
+
