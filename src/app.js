@@ -2,7 +2,9 @@ var express = require('express'),
     app = express(),
     tweets = require('./mocks/tweets.json'),
     twit = require('twit'),
-    config = require('./config');
+    config = require('./config'),
+    moment = require('moment');
+
 const pug = require('pug');
 
 //Set the view engine and the template lookup
@@ -20,16 +22,23 @@ var twitty = new twit({
 });
 //add the first page
 app.get('/', function(req, res){
-    twitty.get('followers/list', { screen_name: 'bevinhernandez' },  function (err, data, response) {
-        console.log(data);
-    });
+    //twitty.get('followers/list', { screen_name: 'bevinhernandez' },  function (err, data, response) {
+        //console.log(data);
+    //});
+    var tweets = '';
     var path = req.path;
     var screenName = 'bevinhernandez';
     res.locals.path = path;
-    res.render('index', {screenName: screenName });
+
+        twitty.get('statuses/home_timeline', {count: 5}, function(err, data, response){
+            tweets = data;
+            res.render('index', {screenName: screenName, tweets: tweets });
+    });
+
+
 
 });
 
 app.listen(3000, function () {
     console.log('You got an app listening on port 3000!')
-})
+});
