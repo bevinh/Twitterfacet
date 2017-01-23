@@ -2170,7 +2170,7 @@ body {
 }
 /* line 46, ../sass/global.sass */
 .app--section {
-  height: 100%;
+  height: 500px;
   border-right: 1px solid #e1e1e1;
   overflow-Y: scroll;
 }
