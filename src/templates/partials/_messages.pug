@@ -1,13 +1,14 @@
 div.grid-33
     div.app--section
         ul.app--message--list
-            li
-                h3 Conversation with
-                    a Jill Spore
-                ul.app--message--conversation
-                    li.app--message
-                        div.app--avatar(style="background-image: url(/static/images/f-spore.png)")
-                            img(src="/static/images/f-spore.png")
-                        p.app--message--text How are things?
-                        p.app--message--timestamp 3 hours ago
+            for message in messages
+                li
+                    h3 Conversation with
+                        a #{message.sender.name}
+                    ul.app--message--conversation
+                        li.app--message
+                            div.app--avatar(style='background-image: url(' + message.sender.profile_image_url_https + ')')
+                                img(src=message.sender.profile_image_url_https)
+                            p.app--message--text #{message.text}
+                            p.app--message--timestamp 3 hours ago
 

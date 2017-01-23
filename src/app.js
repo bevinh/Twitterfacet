@@ -20,20 +20,38 @@ var twitty = new twit({
     access_token_secret:  config.access_token_secret,
     timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 });
+var tweets = '';
+var followers = '';
+var messages = '';
 //add the first page
 app.get('/', function(req, res){
-    //twitty.get('followers/list', { screen_name: 'bevinhernandez' },  function (err, data, response) {
-        //console.log(data);
-    //});
-    var tweets = '';
+
     var path = req.path;
     var screenName = 'bevinhernandez';
     res.locals.path = path;
 
+
+
         twitty.get('statuses/home_timeline', {count: 5}, function(err, data, response){
             tweets = data;
-            res.render('index', {screenName: screenName, tweets: tweets });
-    });
+            twitty.get('friends/list', { screen_name: 'bevinhernandez' },  function (err, data, response) {
+                followers = data;
+                twitty.get('direct_messages', { screen_name: 'bevinhernandez' },  function (err, data, response) {
+                    messages = data;
+                    console.log(messages);
+                    res.render('index', {screenName: screenName, tweets: tweets, followers: followers, messages: messages});
+
+                }).catch( function() {
+                    errorMsg = 'you have encountered the fail whale';
+                });
+            }).catch( function() {
+                errorMsg = 'you have encountered the fail whale';
+            });
+        }).catch( function() {
+            errorMsg = 'you have encountered the fail whale';
+        });
+
+
 
 
 
