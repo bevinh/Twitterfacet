@@ -23,22 +23,16 @@ var twitty = new twit({
 var tweets = '';
 var followers = '';
 var messages = '';
+var screenName = config.screen_name;
+
 //add the first page
 app.get('/', function(req, res){
-
-    var path = req.path;
-    var screenName = 'bevinhernandez';
-    res.locals.path = path;
-
-
-
-        twitty.get('statuses/home_timeline', {count: 5}, function(err, data, response){
+        twitty.get('statuses/user_timeline', {count: 5}, function(err, data, response){
             tweets = data;
             twitty.get('friends/list', { screen_name: 'bevinhernandez' },  function (err, data, response) {
                 followers = data;
                 twitty.get('direct_messages', { screen_name: 'bevinhernandez' },  function (err, data, response) {
                     messages = data;
-                    console.log(messages);
                     res.render('index', {screenName: screenName, tweets: tweets, followers: followers, messages: messages});
 
                 }).catch( function() {
@@ -51,12 +45,7 @@ app.get('/', function(req, res){
             errorMsg = 'you have encountered the fail whale';
         });
 
-
-
-
-
 });
-
 app.listen(3000, function () {
     console.log('You got an app listening on port 3000!')
 });
