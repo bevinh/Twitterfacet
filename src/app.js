@@ -23,6 +23,7 @@ var twitty = new twit({
 var tweets = '';
 var followers = '';
 var messages = '';
+var messagesReceived = '';
 var screenName = config.screen_name;
 
 //add the first page
@@ -32,9 +33,15 @@ app.get('/', function(req, res){
             twitty.get('friends/list', { screen_name: 'bevinhernandez' },  function (err, data, response) {
                 followers = data;
                 twitty.get('direct_messages', { screen_name: 'bevinhernandez' },  function (err, data, response) {
-                    messages = data;
-                    res.render('index', {screenName: screenName, tweets: tweets, followers: followers, messages: messages});
+                    messagesReceived = data;
+                    twitty.get('direct_messages/sent', { screen_name: 'bevinhernandez' },  function (err, data, response) {
+                        messages = data;
+                        console.log(messages);
+                        res.render('index', {screenName: screenName, tweets: tweets, followers: followers, messages: messagesReceived});
 
+                    }).catch( function() {
+                        errorMsg = 'you have encountered the fail whale';
+                    });
                 }).catch( function() {
                     errorMsg = 'you have encountered the fail whale';
                 });
