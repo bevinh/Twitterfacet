@@ -22,7 +22,6 @@ var twitty = new twit({
 });
 var tweets = '';
 var followers = '';
-var messages = '';
 var messagesReceived = '';
 var screenName = config.screen_name;
 
