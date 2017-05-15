@@ -26,14 +26,17 @@ var screenName = config.screen_name;
 
 //add the first page
 app.get('/', function(req, res){
+        //get user timeline
         twitty.get('statuses/user_timeline', {count: 5}, function(err, data, response){
             tweets = data;
+            //get friends list
             twitty.get('friends/list', { screen_name: screenName, count: 5 },  function (err, data, response) {
                 followers = data;
+                //get direct messages
                 twitty.get('direct_messages', { screen_name: screenName, count: 5 },  function (err, data, response) {
                     messagesReceived = data;
-                    console.log(messagesReceived)
-                            res.render('index', {screenName: screenName, tweets: tweets, followers: followers, messages: messagesReceived});
+                        //final render statement
+                        res.render('index', {screenName: screenName, tweets: tweets, followers: followers, messages: messagesReceived});
                     }).catch( function() {
                         errorMsg = 'you have encountered the fail whale';
                     });
